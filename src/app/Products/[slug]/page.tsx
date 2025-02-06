@@ -4,12 +4,7 @@ import { groq } from "next-sanity";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import Navbar from "@/app/components/Navbar";
-import { GetStaticProps, GetStaticPaths } from "next";
 
-// Define your own type for the page props
-interface ProductPageProps {
-  product: Product;
-}
 
 async function getProduct(slug: string): Promise<Product | null> {
   try {
@@ -30,39 +25,29 @@ async function getProduct(slug: string): Promise<Product | null> {
   }
 }
 
-// This function is used to generate the paths for all products
-export const getStaticPaths: GetStaticPaths = async () => {
+// This function generates static paths
+export async function generateStaticParams() {
   const products = await client.fetch(
     groq`*[_type == "product"]{ "slug": slug.current }`
   );
 
-  const paths = products.map((product: { slug: string }) => ({
-    params: { slug: product.slug },
+  return products.map((product: { slug: string }) => ({
+    slug: product.slug,
   }));
+}
 
-  return {
-    paths,
-    fallback: false, // Use false to show 404 for paths not in the array
-  };
-};
-
-// This function fetches the data for each page at build time
-export const getStaticProps: GetStaticProps<ProductPageProps> = async ({ params }) => {
-  const slug = params?.slug as string;
+export default async function ProductPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const product = await getProduct(slug);
 
   if (!product) {
-    return {
-      notFound: true, // Return a 404 if the product is not found
-    };
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-xl text-red-500">Product not found.</p>
+      </div>
+    );
   }
 
-  return {
-    props: { product },
-  };
-};
-
-export default function ProductPage({ product }: ProductPageProps) {
   return (
     <>
       <Navbar />
