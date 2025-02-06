@@ -1,6 +1,8 @@
 
 import { ArrowRight } from "lucide-react";
 import React from "react";
+import Image from "next/image";
+
 export default function StorySection() {
   return (
     <section className="flex flex-col md:flex-row">
@@ -18,11 +20,12 @@ export default function StorySection() {
         </button>
       </div>
 
-      <div className="w-full md:w-1/2 min-h-[400px] md:min-h-[600px]">
-        <img
+      <div className="w-full md:w-1/2 min-h-[400px] md:min-h-[600px] relative">
+        <Image
           src="/Images/yellowchair.png"
           alt="Modern interior with yellow armchair and minimalist artwork"
-          className="w-full h-full object-cover"
+          layout="fill"
+          objectFit="cover"
         />
       </div>
     </section>

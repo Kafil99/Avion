@@ -2,9 +2,10 @@
 
 import React from "react";
 import { ArrowRight, DollarSign, Paintbrush, Recycle, Truck } from "lucide-react";
-import Navbar2 from "../components/Navbar2";
+import Navbar from "../components/Navbar";
 import StorySection from "../components/Storysection";
 import Newsletter from "../components/Newsletter";
+import Image from "next/image";  
 
 export default function HeroSection() {
   const features = [
@@ -18,13 +19,13 @@ export default function HeroSection() {
       icon: <Paintbrush className="w-8 h-8 mb-4" />,
       title: "Made by true artisans",
       description:
-        "Handmade crafted goods made with real passion and craftmanship",
+        "Handmade crafted goods made with real passion and craftsmanship",
     },
     {
       icon: <DollarSign className="w-8 h-8 mb-4" />,
       title: "Unbeatable prices",
       description:
-        "For our materials and quality you won't find better prices anywhere",
+        "For our materials and quality you won&apos;t find better prices anywhere",  // Escaped single quote
     },
     {
       icon: <Recycle className="w-8 h-8 mb-4" />,
@@ -33,11 +34,12 @@ export default function HeroSection() {
         "We use 100% recycled packaging to ensure our footprint is manageable",
     },
   ];
+
   return (
     <>
       {/* Navbar */}
       <div>
-        <Navbar2 />
+        <Navbar />
       </div>
 
       {/* Hero Section */}
@@ -48,7 +50,7 @@ export default function HeroSection() {
             customer service
           </h1>
           <a
-            href="/products" // Add the actual link to your products page
+            href="/Products" 
             className="mt-4 sm:mt-0 text-gray-600 hover:text-gray-900 flex items-center transition-colors duration-200"
           >
             View our products
@@ -68,10 +70,12 @@ export default function HeroSection() {
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 py-12 lg:py-24">
             <div className="w-full lg:w-1/2">
               <div className="aspect-[4/3] relative bg-[#EDE9E6] rounded-lg overflow-hidden">
-                <img
+                <Image
                   src="/Images/blacksofa.png"
                   alt="Modern interior with black sofa and minimal decor"
                   className="w-full h-full object-cover"
+                  width={500}
+                  height={375}
                 />
               </div>
             </div>
@@ -112,9 +116,9 @@ export default function HeroSection() {
         </div>
       </section>
 
-          <section>
-            <Newsletter />
-          </section>
+      <section>
+        <Newsletter />
+      </section>
     </>
   );
 }

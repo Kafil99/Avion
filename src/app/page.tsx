@@ -40,7 +40,12 @@ function StorySection() {
           </div>
 
           <div className="relative h-[600px] bg-[#F5F5F5]">
-            <img src="/Images/Sofa2.png" alt="Furniture display with plants" className="w-full h-full object-cover" />
+            <Image
+              src="/Images/Sofa2.png"
+              alt="Furniture display with plants"
+              layout="fill"
+              objectFit="cover"
+            />
           </div>
         </div>
       </div>
@@ -127,11 +132,12 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="relative min-h-[600px] overflow-hidden">
-            <div className="absolute inset-0 bg-black/50"></div> {/* Gradient overlay */}
-            <img
+            <div className="absolute inset-0 bg-black/50"></div>
+            <Image
               src="/Images/RightImage.png"
               alt="Modern chair"
-              className="absolute inset-0 w-full h-full object-cover"
+              layout="fill"
+              objectFit="cover"
             />
           </div>
         </div>
@@ -199,11 +205,13 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {popularProducts.map((product) => (
             <div key={product.id} className={`group ${product.isLarge ? "md:col-span-2 lg:col-span-1" : ""} relative`}>
-              <div className="aspect-[4/3] overflow-hidden bg-[#F5F5F5] mb-6">
-                <img
+              <div className="aspect-[4/3] overflow-hidden bg-[#F5F5F5] mb-6 relative">
+                <Image
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  layout="fill"
+                  objectFit="cover"
+                  className="group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="space-y-2">
