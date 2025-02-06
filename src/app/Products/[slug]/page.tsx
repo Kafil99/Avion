@@ -5,7 +5,6 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import Navbar from "@/app/components/Navbar";
 
-
 async function getProduct(slug: string): Promise<Product | null> {
   try {
     return await client.fetch(
@@ -36,7 +35,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
+// Update the page component to type 'params' correctly
+type ProductPageProps = {
+  params: { slug: string };
+};
+
+export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = params;
   const product = await getProduct(slug);
 
@@ -51,7 +55,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
   return (
     <>
       <Navbar />
-
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
