@@ -5,7 +5,8 @@ import { ArrowRight, DollarSign, Paintbrush, Recycle, Truck } from "lucide-react
 import Navbar from "../components/Navbar";
 import StorySection from "../components/Storysection";
 import Newsletter from "../components/Newsletter";
-import Image from "next/image";  
+import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   const features = [
@@ -25,7 +26,7 @@ export default function HeroSection() {
       icon: <DollarSign className="w-8 h-8 mb-4" />,
       title: "Unbeatable prices",
       description:
-        "For our materials and quality you won&apos;t find better prices anywhere",  // Escaped single quote
+        "For our materials and quality you won&apos;t find better prices anywhere", // Escaped single quote
     },
     {
       icon: <Recycle className="w-8 h-8 mb-4" />,
@@ -49,13 +50,10 @@ export default function HeroSection() {
             A brand built on the love of craftsmanship, quality, and outstanding
             customer service
           </h1>
-          <a
-            href="/Products" 
-            className="mt-4 sm:mt-0 text-gray-600 hover:text-gray-900 flex items-center transition-colors duration-200"
-          >
+          <Link href="/Products" className="mt-4 sm:mt-0 text-gray-600 hover:text-gray-900 flex items-center transition-colors duration-200">
             View our products
             <ArrowRight className="ml-2 h-4 w-4" />
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -81,7 +79,7 @@ export default function HeroSection() {
             </div>
             <div className="w-full lg:w-1/2 space-y-6">
               <h1 className="text-3xl lg:text-4xl font-light text-gray-900 leading-tight">
-                Our service isn't just personal, it's actually hyper-personally
+                Our service isn&apos;t just personal, it&apos;s actually hyper-personally
                 exquisite
               </h1>
               <p className="text-gray-600 leading-relaxed">
