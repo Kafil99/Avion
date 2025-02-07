@@ -6,14 +6,6 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import Navbar from "@/app/components/Navbar";
 
-// Define the ProductPageProps interface
-interface ProductPageProps {
-  params: {
-    slug: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
 // Fetch a single product by its slug
 async function getProduct(slug: string): Promise<Product | null> {
   try {
@@ -48,7 +40,9 @@ export async function generateStaticParams() {
 // ProductPage component
 export default async function ProductPage({
   params,
-}: ProductPageProps): Promise<ReactElement> {
+}: {
+  params: { slug: string };
+}): Promise<ReactElement> {
   const { slug } = params;
   const product = await getProduct(slug);
 
