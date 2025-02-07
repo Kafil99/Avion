@@ -24,7 +24,6 @@ async function getProduct(slug: string): Promise<Product | null> {
   }
 }
 
-// This function generates static paths
 export async function generateStaticParams() {
   const products = await client.fetch(
     groq`*[_type == "product"]{ "slug": slug.current }`
@@ -35,12 +34,12 @@ export async function generateStaticParams() {
   }));
 }
 
-// Update the page component to type 'params' correctly
-type ProductPageProps = {
+// Remove the ProductPageProps type and directly type the params
+export default async function ProductPage({
+  params,
+}: {
   params: { slug: string };
-};
-
-export default async function ProductPage({ params }: ProductPageProps) {
+}) {
   const { slug } = params;
   const product = await getProduct(slug);
 
@@ -58,7 +57,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Product Image */}
             <div className="aspect-square bg-white rounded-lg shadow-lg overflow-hidden p-6">
               {product.image && (
                 <Image
@@ -71,13 +69,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
               )}
             </div>
 
-            {/* Product Details */}
             <div className="flex flex-col gap-8">
               <h1 className="text-4xl font-bold text-gray-900">{product.name}</h1>
               <p className="text-2xl font-semibold text-gray-800">${product.price}</p>
               <p className="text-lg text-gray-600 leading-relaxed">{product.description}</p>
 
-              {/* Call-to-Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="w-full sm:w-auto bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition duration-300">
                   Add to Cart
@@ -87,7 +83,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </button>
               </div>
 
-              {/* Additional Information */}
               <div className="mt-8 space-y-4">
                 <div className="flex items-center gap-2">
                   <span className="text-gray-700">Availability:</span>
