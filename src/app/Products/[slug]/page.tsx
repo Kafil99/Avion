@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { client } from "@/sanity/lib/client";
 import { Product } from "../../../../types/products";
 import { groq } from "next-sanity";
@@ -5,15 +6,15 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import Navbar from "@/app/components/Navbar";
 
-// Define a props interface that matches Next.js’s expected structure.
-interface PageProps {
+// Renamed interface to avoid conflicts.
+interface ProductPageProps {
   params: {
     slug: string;
   };
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-// Fetch a single product by its slug
+// Fetch a single product by its slug.
 async function getProduct(slug: string): Promise<Product | null> {
   try {
     return await client.fetch(
@@ -33,7 +34,7 @@ async function getProduct(slug: string): Promise<Product | null> {
   }
 }
 
-// Generate the list of slugs to statically generate pages for
+// Generate the list of slugs to statically generate pages for.
 export async function generateStaticParams() {
   const products = await client.fetch(
     groq`*[_type == "product"]{ "slug": slug.current }`
@@ -44,9 +45,11 @@ export async function generateStaticParams() {
   }));
 }
 
-// Type the props so that 'params' is no longer implicitly any.
-export default async function ProductPage({ params }: PageProps) {
-  const { slug } = params;
+// Use ReactElement as the return type.
+export default async function ProductPage(
+  props: ProductPageProps
+): Promise<ReactElement> {
+  const { slug } = props.params;
   const product = await getProduct(slug);
 
   if (!product) {
@@ -54,7 +57,7 @@ export default async function ProductPage({ params }: PageProps) {
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-xl text-red-500">Product not found.</p>
       </div>
-    );
+    ) as ReactElement;
   }
 
   return (
