@@ -6,7 +6,7 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import Navbar from "@/app/components/Navbar";
 
-// Renamed interface to avoid conflicts.
+// Define the ProductPageProps interface
 interface ProductPageProps {
   params: {
     slug: string;
@@ -14,7 +14,7 @@ interface ProductPageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-// Fetch a single product by its slug.
+// Fetch a single product by its slug
 async function getProduct(slug: string): Promise<Product | null> {
   try {
     return await client.fetch(
@@ -34,7 +34,7 @@ async function getProduct(slug: string): Promise<Product | null> {
   }
 }
 
-// Generate the list of slugs to statically generate pages for.
+// Generate the list of slugs to statically generate pages for
 export async function generateStaticParams() {
   const products = await client.fetch(
     groq`*[_type == "product"]{ "slug": slug.current }`
@@ -45,11 +45,11 @@ export async function generateStaticParams() {
   }));
 }
 
-// Use ReactElement as the return type.
-export default async function ProductPage(
-  props: ProductPageProps
-): Promise<ReactElement> {
-  const { slug } = props.params;
+// ProductPage component
+export default async function ProductPage({
+  params,
+}: ProductPageProps): Promise<ReactElement> {
+  const { slug } = params;
   const product = await getProduct(slug);
 
   if (!product) {
@@ -57,7 +57,7 @@ export default async function ProductPage(
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-xl text-red-500">Product not found.</p>
       </div>
-    ) as ReactElement;
+    );
   }
 
   return (
