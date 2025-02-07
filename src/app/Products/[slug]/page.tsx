@@ -5,6 +5,15 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import Navbar from "@/app/components/Navbar";
 
+// Define a props interface that matches Next.js’s expected structure.
+interface PageProps {
+  params: {
+    slug: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+// Fetch a single product by its slug
 async function getProduct(slug: string): Promise<Product | null> {
   try {
     return await client.fetch(
@@ -24,6 +33,7 @@ async function getProduct(slug: string): Promise<Product | null> {
   }
 }
 
+// Generate the list of slugs to statically generate pages for
 export async function generateStaticParams() {
   const products = await client.fetch(
     groq`*[_type == "product"]{ "slug": slug.current }`
@@ -34,12 +44,8 @@ export async function generateStaticParams() {
   }));
 }
 
-// Remove the ProductPageProps type and directly type the params
-export default async function ProductPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+// Type the props so that 'params' is no longer implicitly any.
+export default async function ProductPage({ params }: PageProps) {
   const { slug } = params;
   const product = await getProduct(slug);
 
@@ -70,9 +76,15 @@ export default async function ProductPage({
             </div>
 
             <div className="flex flex-col gap-8">
-              <h1 className="text-4xl font-bold text-gray-900">{product.name}</h1>
-              <p className="text-2xl font-semibold text-gray-800">${product.price}</p>
-              <p className="text-lg text-gray-600 leading-relaxed">{product.description}</p>
+              <h1 className="text-4xl font-bold text-gray-900">
+                {product.name}
+              </h1>
+              <p className="text-2xl font-semibold text-gray-800">
+                ${product.price}
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                {product.description}
+              </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="w-full sm:w-auto bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition duration-300">

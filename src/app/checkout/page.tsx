@@ -95,7 +95,7 @@ const CheckOut = () => {
             status: 'pending',
             shippingMethod: 'Standard',
             paymentMethod: 'Credit Card',
-            orderDate: new Date().toISOString(),
+            orderDate: new Date().toString(),
         };
 
         try {
